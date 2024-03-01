@@ -8,10 +8,11 @@ const getProducts = async () => {
   return data;
 };
 
-const getProductDetail = async (id) => {
-  const response = await fetch(`${baseUrl}/products/${id}`);
+const getProductDetail = async ({ queryKey }) => {
+  const productId = queryKey[1];
+  const response = await fetch(`${baseUrl}/products/${productId}`);
   if (!response.ok) {
-    throw new Error(`productDetails/${id} fetch not ok`);
+    throw new Error(`productDetails/${productId} fetch not ok`);
   }
   const data = response.json();
   return data;
