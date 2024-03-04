@@ -8,7 +8,7 @@ const getProducts = async () => {
   return data;
 };
 
-const getProductDetail = async ({ queryKey }) => {
+const getProductDetails = async ({ queryKey }) => {
   const productId = queryKey[1];
   const response = await fetch(`${baseUrl}/products/${productId}`);
   if (!response.ok) {
@@ -17,4 +17,4 @@ const getProductDetail = async ({ queryKey }) => {
   const data = response.json();
   return data;
 };
-export { getProducts, getProductDetail };
+export { getProducts, getProductDetails };
