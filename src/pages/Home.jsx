@@ -1,7 +1,7 @@
 import ProductList from "../components/ProductList";
 const Home = () => {
   return (
-    <div>
+    <div className="col-span-5">
       <ProductList />
     </div>
   );

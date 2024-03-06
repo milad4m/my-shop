@@ -7,8 +7,10 @@ const Layout = () => {
   return (
     <>
       <Header />
-      <Sidebar />
-      <Outlet />
+      <div className="grid grid-cols-6 gap-4">
+        <Sidebar />
+        <Outlet />
+      </div>
       <Footer />
     </>
   );
