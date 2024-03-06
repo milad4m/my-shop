@@ -7,31 +7,60 @@ import {
   removeItem,
   increaseItem,
   decreaseItem,
+  getTotalQuantity,
 } from "../store/slices/productSlice";
+import { useEffect } from "react";
 const ProductList = () => {
   const query = useQuery({ queryKey: ["products"], queryFn: getProducts });
   const items = useSelector((state) => state.counter.items);
   const totalQuantity = useSelector((state) => state.counter.totalQuantity);
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getTotalQuantity());
+  }, [dispatch]);
   return (
     <>
       <p>total Quantity : {totalQuantity}</p>
-      <ul>
+      <ul className="container grid gap-2 xl:gap-3 grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
         {query.data?.map((product) => (
           <Product
             key={product.id}
             item={product}
             addItemEvent={() =>
-              dispatch(addItem({ title: product.title, id: product.id }))
+              dispatch(
+                addItem({
+                  title: product.title,
+                  id: product.id,
+                  image: product.image,
+                }),
+              )
             }
             removeItemEvent={() =>
-              dispatch(removeItem({ title: product.title, id: product.id }))
+              dispatch(
+                removeItem({
+                  title: product.title,
+                  id: product.id,
+                  image: product.image,
+                }),
+              )
             }
             increaseItemEvent={() =>
-              dispatch(increaseItem({ title: product.title, id: product.id }))
+              dispatch(
+                increaseItem({
+                  title: product.title,
+                  id: product.id,
+                  image: product.image,
+                }),
+              )
             }
             decreaseItemEvent={() =>
-              dispatch(decreaseItem({ title: product.title, id: product.id }))
+              dispatch(
+                decreaseItem({
+                  title: product.title,
+                  id: product.id,
+                  image: product.image,
+                }),
+              )
             }
             quantity={
               items.find((item) => item.id === product.id)?.itemQuantity
