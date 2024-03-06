@@ -7,9 +7,10 @@ import {
   removeItem,
   increaseItem,
   decreaseItem,
+  getTotalQuantity,
 } from "../store/slices/productSlice";
+import { useEffect } from "react";
 const ProductDetails = () => {
-  console.log(useParams());
   const { productId } = useParams();
   const dispatch = useDispatch();
   const query = useQuery({
@@ -20,53 +21,84 @@ const ProductDetails = () => {
   const quantity = items.find(
     (item) => item.id === query.data?.id,
   )?.itemQuantity;
+  const totalQuantity = useSelector((state) => state.counter.totalQuantity);
+  useEffect(() => {
+    dispatch(getTotalQuantity());
+  }, [dispatch]);
   return (
-    <>
-      <div key={query.data?.id}>{query.data?.title}</div>
-      {quantity ? (
-        <>
-          <button
-            onClick={() =>
-              dispatch(
-                increaseItem({ title: query.data?.title, id: query.data?.id }),
-              )
-            }
-          >
-            +
-          </button>
-          <button
-            onClick={
-              quantity == 1
-                ? () =>
-                    dispatch(
-                      removeItem({
-                        title: query.data?.title,
-                        id: query.data?.id,
-                      }),
-                    )
-                : () =>
-                    dispatch(
-                      decreaseItem({
-                        title: query.data?.title,
-                        id: query.data?.id,
-                      }),
-                    )
-            }
-          >
-            {quantity == 1 ? "remove" : "-"}
-          </button>
-        </>
-      ) : (
-        <button
-          onClick={() =>
-            dispatch(addItem({ title: query.data?.title, id: query.data?.id }))
-          }
-        >
-          add to cart
-        </button>
-      )}
-      <span>This item value is {quantity || 0}</span>
-    </>
+    <div className="col-span-5 container">
+      <p className="mb-4">total Quantity : {totalQuantity}</p>
+      <div className="text-center flex flex-col justify-around items-center">
+        <img
+          className="h-32 lg:h-80 mx-auto"
+          src={query.data?.image}
+          alt={query.data?.category}
+        />
+        <h3 key={query.data?.id} className="font-bold	m-3">
+          {query.data?.title}
+        </h3>
+        <div>
+          {quantity ? (
+            <>
+              <button
+                className="font-bold text-lg text-blue-700 p-5"
+                onClick={() =>
+                  dispatch(
+                    increaseItem({
+                      title: query.data?.title,
+                      id: query.data?.id,
+                      image: query.data?.image,
+                    }),
+                  )
+                }
+              >
+                +
+              </button>
+              <span>{quantity}</span>
+              <button
+                className="font-bold text-lg text-red-700 p-5"
+                onClick={
+                  quantity == 1
+                    ? () =>
+                        dispatch(
+                          removeItem({
+                            title: query.data?.title,
+                            id: query.data?.id,
+                            image: query.data?.image,
+                          }),
+                        )
+                    : () =>
+                        dispatch(
+                          decreaseItem({
+                            title: query.data?.title,
+                            id: query.data?.id,
+                            image: query.data?.image,
+                          }),
+                        )
+                }
+              >
+                {quantity == 1 ? "remove" : "-"}
+              </button>
+            </>
+          ) : (
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() =>
+                dispatch(
+                  addItem({
+                    title: query.data?.title,
+                    id: query.data?.id,
+                    image: query.data?.image,
+                  }),
+                )
+              }
+            >
+              add to cart
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
   );
 };
 
