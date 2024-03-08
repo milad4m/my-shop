@@ -7,9 +7,7 @@ import {
   removeItem,
   increaseItem,
   decreaseItem,
-  getTotalQuantity,
 } from "../store/slices/productSlice";
-import { useEffect } from "react";
 const ProductDetails = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
@@ -22,9 +20,6 @@ const ProductDetails = () => {
     (item) => item.id === query.data?.id,
   )?.itemQuantity;
   const totalQuantity = useSelector((state) => state.counter.totalQuantity);
-  useEffect(() => {
-    dispatch(getTotalQuantity());
-  }, [dispatch]);
   return (
     <div className="col-span-5 container">
       <p className="mb-4">total Quantity : {totalQuantity}</p>

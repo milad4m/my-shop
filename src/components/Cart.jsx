@@ -1,16 +1,11 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   removeItem,
   increaseItem,
   decreaseItem,
-  getTotalQuantity,
 } from "../store/slices/productSlice";
 const Cart = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getTotalQuantity());
-  }, [dispatch]);
   const items = useSelector((state) => state.counter.items);
   return (
     <div className="overflow-y-auto h-screen">

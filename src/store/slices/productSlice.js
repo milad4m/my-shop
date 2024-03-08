@@ -4,7 +4,11 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("items"))
     : [],
   itemQuantity: 0,
-  totalQuantity: 0,
+  totalQuantity: localStorage.getItem("items")
+    ? JSON.parse(localStorage.getItem("items")).reduce((accumulator, item) => {
+        return (accumulator += item.itemQuantity);
+      }, 0)
+    : 0,
 };
 
 export const productSlice = createSlice({
@@ -40,23 +44,11 @@ export const productSlice = createSlice({
       localStorage.setItem("items", JSON.stringify(state.items));
       state.totalQuantity -= 1;
     },
-    getTotalQuantity: (state) => {
-      const items = JSON.parse(JSON.stringify(state.items));
-      const totalQuantity = items.reduce((accumulator, item) => {
-        return (accumulator += item.itemQuantity);
-      }, 0);
-      state.totalQuantity = totalQuantity;
-    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const {
-  addItem,
-  removeItem,
-  increaseItem,
-  decreaseItem,
-  getTotalQuantity,
-} = productSlice.actions;
+export const { addItem, removeItem, increaseItem, decreaseItem } =
+  productSlice.actions;
 
 export default productSlice.reducer;
