@@ -9,7 +9,7 @@ import {
   decreaseItem,
 } from "../store/slices/productSlice";
 const ProductList = () => {
-  const query = useQuery({ queryKey: ["products"], queryFn: getProducts });
+  const { data } = useQuery({ queryKey: ["products"], queryFn: getProducts });
   const items = useSelector((state) => state.counter.items);
   const totalQuantity = useSelector((state) => state.counter.totalQuantity);
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const ProductList = () => {
       {console.log(items)}
       <p>total Quantity : {totalQuantity}</p>
       <ul className="container grid gap-2 xl:gap-3 grid-cols-1 xl:grid-cols-4 lg:grid-cols-3 md:grid-cols-2">
-        {query.data?.map((product) => (
+        {data?.map((product) => (
           <Product
             key={product.id}
             item={product}

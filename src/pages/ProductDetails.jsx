@@ -11,14 +11,12 @@ import {
 const ProductDetails = () => {
   const { productId } = useParams();
   const dispatch = useDispatch();
-  const query = useQuery({
+  const { data } = useQuery({
     queryKey: ["productDetail", productId],
     queryFn: getProductDetails,
   });
   const items = useSelector((state) => state.counter.items);
-  const quantity = items.find(
-    (item) => item.id === query.data?.id,
-  )?.itemQuantity;
+  const quantity = items.find((item) => item.id === data?.id)?.itemQuantity;
   const totalQuantity = useSelector((state) => state.counter.totalQuantity);
   return (
     <div className="col-span-5 container">
@@ -26,11 +24,11 @@ const ProductDetails = () => {
       <div className="text-center flex flex-col justify-around items-center">
         <img
           className="h-32 lg:h-80 mx-auto"
-          src={query.data?.image}
-          alt={query.data?.category}
+          src={data?.image}
+          alt={data?.category}
         />
-        <h3 key={query.data?.id} className="font-bold	m-3">
-          {query.data?.title}
+        <h3 key={data?.id} className="font-bold	m-3">
+          {data?.title}
         </h3>
         <div>
           {quantity ? (
@@ -40,9 +38,9 @@ const ProductDetails = () => {
                 onClick={() =>
                   dispatch(
                     increaseItem({
-                      title: query.data?.title,
-                      id: query.data?.id,
-                      image: query.data?.image,
+                      title: data?.title,
+                      id: data?.id,
+                      image: data?.image,
                     }),
                   )
                 }
@@ -57,17 +55,17 @@ const ProductDetails = () => {
                     ? () =>
                         dispatch(
                           removeItem({
-                            title: query.data?.title,
-                            id: query.data?.id,
-                            image: query.data?.image,
+                            title: data?.title,
+                            id: data?.id,
+                            image: data?.image,
                           }),
                         )
                     : () =>
                         dispatch(
                           decreaseItem({
-                            title: query.data?.title,
-                            id: query.data?.id,
-                            image: query.data?.image,
+                            title: data?.title,
+                            id: data?.id,
+                            image: data?.image,
                           }),
                         )
                 }
@@ -81,9 +79,9 @@ const ProductDetails = () => {
               onClick={() =>
                 dispatch(
                   addItem({
-                    title: query.data?.title,
-                    id: query.data?.id,
-                    image: query.data?.image,
+                    title: data?.title,
+                    id: data?.id,
+                    image: data?.image,
                   }),
                 )
               }
