@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { getProductDetails } from "../api/fakeStore";
 import { useSelector } from "react-redux";
 import Button from "../components/Button";
+import TotalQuantity from "../components/TotalQuantity";
 const ProductDetails = () => {
   const { productId } = useParams();
   const { data } = useQuery({
@@ -11,11 +12,10 @@ const ProductDetails = () => {
   });
   const items = useSelector((state) => state.counter.items);
   const quantity = items.find((item) => item.id === data?.id)?.itemQuantity;
-  const totalQuantity = useSelector((state) => state.counter.totalQuantity);
   const item = { title: data?.title, id: data?.id, image: data?.image };
   return (
     <div className="col-span-5 container">
-      <p className="mb-4">total Quantity : {totalQuantity}</p>
+      <TotalQuantity />
       <div className="text-center flex flex-col justify-around items-center">
         <img
           className="h-32 lg:h-80 mx-auto"
