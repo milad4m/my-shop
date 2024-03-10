@@ -1,11 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import {
-  removeItem,
-  increaseItem,
-  decreaseItem,
-} from "../store/slices/productSlice";
+import { useSelector } from "react-redux";
+import Button from "./Button";
 const Cart = () => {
-  const dispatch = useDispatch();
   const items = useSelector((state) => state.counter.items);
   return (
     <div className="overflow-y-auto h-screen">
@@ -24,43 +19,21 @@ const Cart = () => {
             <h3 className="font-bold	m-3">{item.title}</h3>
             <div>
               <>
-                <button
-                  className="font-bold text-lg text-blue-700 p-5"
-                  onClick={() =>
-                    dispatch(
-                      increaseItem({
-                        title: item.title,
-                        id: item.id,
-                        image: item.image,
-                      }),
-                    )
-                  }
+                <Button
+                  eventName="increase"
+                  classList="font-bold text-lg text-blue-700 p-5"
+                  item={item}
                 >
                   +
-                </button>
+                </Button>
                 <span>{item.itemQuantity}</span>
-                <button
-                  className="font-bold text-lg text-red-700 p-5"
-                  onClick={() =>
-                    item.itemQuantity == 1
-                      ? dispatch(
-                          removeItem({
-                            title: item.title,
-                            id: item.id,
-                            image: item.image,
-                          }),
-                        )
-                      : dispatch(
-                          decreaseItem({
-                            title: item.title,
-                            id: item.id,
-                            image: item.image,
-                          }),
-                        )
-                  }
+                <Button
+                  eventName={item.itemQuantity == 1 ? "remove" : "decrease"}
+                  item={item}
+                  classList="font-bold text-lg text-red-700 p-5"
                 >
                   {item.itemQuantity == 1 ? "remove" : "-"}
-                </button>
+                </Button>
               </>
             </div>
           </li>
